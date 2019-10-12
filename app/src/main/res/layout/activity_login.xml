@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:fontFamily="sans-serif"
         android:text="TODO"
         android:textColor="@color/white"
         android:textSize="36dp"
@@ -38,6 +37,7 @@
             app:fontFamily="@font/open_sans_semibold" />
 
         <EditText
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -68,6 +68,7 @@
             app:fontFamily="@font/open_sans_semibold" />
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -81,6 +82,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/login"
         android:layout_width="95dp"
         android:layout_height="40dp"
         android:layout_marginTop="57dp"
@@ -89,6 +91,7 @@
         android:textColor="@color/white" />
 
     <Button
+        android:id="@+id/signUp"
         android:layout_width="95dp"
         android:layout_height="40dp"
         android:layout_marginTop="23dp"
