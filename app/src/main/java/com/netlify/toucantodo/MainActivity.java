@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     Button selectDate;
     ImageView addTodo;
     EditText titleEditText;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     String dateString;
     String params;
@@ -57,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadList();
+            }
+        });
 
         SharedPreferences preferences = getSharedPreferences("tokenData", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -92,9 +102,16 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                     todoListData = responseObject.getJSONArray("result");
 
                     todoList = findViewById(R.id.todoList);
-                    adapter = new TodoListAdapter(todoListData, headers, getApplicationContext());
+                    adapter = new TodoListAdapter(todoListData, headers, getApplicationContext(), new TodoListAdapter.ToggleHandler() {
+
+                        @Override
+                        public void rePopulateList() {
+                            loadList();
+                        }
+                    });
                     todoList.setAdapter(adapter);
                     todoList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    swipeRefreshLayout.setRefreshing(false);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -159,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                             JSONObject responseObject = new JSONObject(response);
                             if (responseObject.getBoolean("success")) {
                                 Toast.makeText(getApplicationContext(), "Todo Added", Toast.LENGTH_SHORT).show();
+                                loadList();
                             } else {
                                 Toast.makeText(getApplicationContext(), "Unable to add Todo", Toast.LENGTH_SHORT).show();
                             }
@@ -186,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
                 requestQueue.add(stringRequest);
                 dialog.dismiss();
-                loadList();
             }
         });
 

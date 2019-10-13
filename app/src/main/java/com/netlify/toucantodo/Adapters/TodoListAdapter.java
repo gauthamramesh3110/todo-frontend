@@ -29,16 +29,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder> {
+public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder> {
 
     JSONArray list;
     HashMap<String, String> headers;
     Context context;
+    ToggleHandler toggleHandler;
 
-    public TodoListAdapter(JSONArray list, HashMap<String, String> headers, Context context) {
+    public TodoListAdapter(JSONArray list, HashMap<String, String> headers, Context context, ToggleHandler toggleHandler) {
         this.list = list;
         this.headers = headers;
         this.context = context;
+        this.toggleHandler = toggleHandler;
     }
 
     @NonNull
@@ -100,6 +102,7 @@ public abstract class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapt
             @Override
             public void onResponse(String response) {
                 Log.i("Response", response);
+                toggleHandler.rePopulateList();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -135,5 +138,9 @@ public abstract class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapt
             important = itemView.findViewById(R.id.important);
             title = itemView.findViewById(R.id.todoTitle);
         }
+    }
+
+    public interface ToggleHandler {
+        void rePopulateList();
     }
 }
