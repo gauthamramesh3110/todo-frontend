@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Toucan Todo</string>
+    <string name="app_name">Todo</string>
     <string name="username"><font size="12">Enter your username</font></string>
     <string name="password"><font size="12">Enter your password</font></string>
 </resources>

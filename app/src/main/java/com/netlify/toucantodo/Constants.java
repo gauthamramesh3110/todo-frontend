@@ -10,4 +10,8 @@ public class Constants {
 
     public static String CONTENT_TYPE = "Content-Type";
     public static String JSON_CONTENT_TYPE = "application/json";
+
+    public static String TOKEN = "tokenData";
+
+
 }

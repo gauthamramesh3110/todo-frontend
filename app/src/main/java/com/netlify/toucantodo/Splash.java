@@ -25,12 +25,12 @@ public class Splash extends AppCompatActivity {
                 Intent homePage = new Intent(Splash.this, MainActivity.class);
                 //Intent is used to switch from one activity to another.
 
-                SharedPreferences preferences = getSharedPreferences("tokenData", MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(Constants.TOKEN, MODE_PRIVATE);
 
                 if (preferences.getBoolean("loggedIn", false)) {
-                    startActivity(login);
-                } else {
                     startActivity(homePage);
+                } else {
+                    startActivity(login);
                 }
                 //invoke the SecondActivity.
 

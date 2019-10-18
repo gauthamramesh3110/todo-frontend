@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject responseObject = new JSONObject(response);
 
                             if (responseObject.getBoolean("success")) {
-                                SharedPreferences preferences = getSharedPreferences("tokenData", Context.MODE_PRIVATE);
+                                SharedPreferences preferences = getSharedPreferences(Constants.TOKEN, Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = preferences.edit();
 
                                 editor.putString("token", responseObject.getString("token"));
